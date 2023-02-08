@@ -11,7 +11,20 @@
 * HTML, HTTP API, CSR, SSR
 * 자바 백엔드 웹 기술 역사
 
-## [서블릿]()
+## [서블릿](./강의/2강)
+* 프로젝트 생성
+* Hello Servlet
+* HttpServletRequest - 개요
+* HttpServletRequest - 기본 사용법
+* HTTP 요청 데이터 - 개요
+* HTTP 요청 데이터 - GET 쿼리 파라미터
+* HTTP 요청 데이터 - POST HTML Form
+* HTTP 요청 데이터 - API 메시지 바디 - 단순 텍스트
+* HTTP 요청 데이터 - API 메시지 바디 - JSON
+* HttpServletResponse - 기본 사용법
+* HTTP 응답 데이터 - 단순 텍스트, HTML
+* HTTP 응답 데이터 - API JSON
+* 정리
 
 ## [서블릿, JSP, MVC 패턴]()
 
