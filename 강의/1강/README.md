@@ -180,7 +180,7 @@ public class HelloServlet extends HttpServlet {
 ![img_14.png](img_14.png)
   * HTML 최종 결과를 서버에서 만들어서 웹 브라우저에 전달
   * 주로 정적인 화면에 사용
-  * 관련 기술: JSP, Thymleaf -> 백엔드 개발자
+  * 관련 기술: JSP, Thymeleaf -> 백엔드 개발자
 * **CSR**: Client Side Rendering
 ![img_15.png](img_15.png)
   * HTML 결과를 자바스크립트를 사용해 웹 브라우저에서 동적으로 생성해서 적용
@@ -193,7 +193,7 @@ public class HelloServlet extends HttpServlet {
 
 ### 백엔드 개발자 입장에서 UI 기술
 * 백엔드 - SSR
-  * JSP, Thymleaf
+  * JSP, Thymeleaf
   * 화면이 정적이고, 복잡하지 않을 때 사용
   * 백엔드 개발자는 서버 사이드 렌더링 기술 학습 **필수**
 * 웹 프론트엔드 - CSR
@@ -206,3 +206,50 @@ public class HelloServlet extends HttpServlet {
   * 웹 프론트엔드도 깊이있게 잘 하려면 숙련에 오랜 시간이 필요하다.
 
 ## 자바 백엔드 웹 기술 역사
+### 과거 기술
+* Servlet - 1997
+  * HTML 생성이 어려움
+* JSP - 1999
+  * HTML 생성은 편리하지만, 비즈니스 로직까지 너무 많은 역할 담당
+* Servlet, JSP 조합 MVC 패턴 사용
+  * Model, View, Controller 로 역할을 나누어 개발
+* MVC 프레임워크 춘추 전국 시대 - 2000년 초 ~ 2010년 초
+  * MVC 패턴 자동화, 복잡한 웹 기술을 편리하게 사용할 수 있는 다양한 기능 지원
+  * 스트럿츠, 웹워크, 스프링 MVC(과거 버전)
+
+### 현재 사용 기술
+* 애노테이션 기반의 스프링 MVC 등장
+  * `@Controller`
+  * MVC 프레임워크의 춘추 전국 시대 마무리
+* 스프링 부트의 등장
+  * 스프링 부트는 서버를 내장
+  * 과거에는 서버에 WAS를 직접 설치하고, 소스는 war를 만들어서 설치한 WAS에 배포
+  * 스프링 부트는 빌드 결과(jar)에 WAS 서버 포함 -> 빌드 배포 단순화
+
+### 최신 기술 - 스프링 웹 기술의 분화
+* Web Servlet - Spring MVC
+* Web Reactive - Spring WebFlux
+
+### 최신 기술 - 스프링 웹 플럭스
+* 특징
+  * 비동기 Non Blocking 처리
+  * 최소 Thread로 최대 성능
+    * Thread Context Switching 비용 효율화
+  * 함수형 스타일로 개발
+    * 동시처리 코드 효율화
+  * Servlet 기술 사용 X
+* 그런데
+  * WebFlux는 기술적 난이도가 매우 높음
+  * 아직은 RDB 지원 부족
+  * 일반 MVC의 Thread 모델도 충분히 빠르다
+  * 실무에서 아직 많이 사용되지는 않음
+
+### 뷰 템플릿 역사
+* **JSP**
+  * 속도 느림, 기능 부족
+* **Freemarker**, **Velocity**
+  * 속도 문제 해결, 다양한 기능
+* **Thymeleaf**
+  * 내추럴 템플릿: HTML의 모양을 유지하면서 View 템플릿 적용 가능
+  * 스프링 MVC와 강력한 기능 통합
+  * **최선의 선택**, 단 성능은 프리마커, 벨로시티가 더 빠름
