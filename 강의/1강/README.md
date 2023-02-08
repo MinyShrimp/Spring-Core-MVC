@@ -51,10 +51,10 @@
 ![img_5.png](img_5.png)
 
 ### 서버에서 처리해야 하는 업무
-* 웹 애플리케이션 서버 직접 구현
+* 웹 애플리케이션 서버 직접 구현<br>
 ![img_6.png](img_6.png)
   * 비즈니스 로직의 구현에 필요한 데이터를 직접 찾아야 한다.
-* 서블릿을 지원하는 WAS 사용
+* 서블릿을 지원하는 WAS 사용<br>
 ![img_7.png](img_7.png)
   * 비즈니스 로직의 구현에 필요한 데이터를 서블릿이 찾아준다.
 
@@ -104,6 +104,7 @@ public class HelloServlet extends HttpServlet {
 
 ### 요청 마다 쓰레드 생성
 ![img_11.png](img_11.png)
+
 **장점**
 * 동시 요청을 처리할 수 없다.
 * 리소스가 허용할 때 까지 처리 가능
@@ -136,7 +137,7 @@ public class HelloServlet extends HttpServlet {
 
 ### 성능 튜닝
 * WAS의 주요 튜닝 포인트는 최대 쓰레드수이다.
-* 이 값을 너무 낮게 설정하면?
+* 이 값을 너무 낮게 설정하면?<br>
 ![img_13.png](img_13.png)
   * 동시 요청이 많으면, 서버 리소스는 여유롭지만, 클라이언트는 금방 응답 지연
 * 이 값을 너무 높게 설정하면?
@@ -176,12 +177,12 @@ public class HelloServlet extends HttpServlet {
   * 서버 to 서버 ( 주문 서버 -> 결제 서버, 기업간 데이터 통신 )
 
 ### CSR, SSR
-* **SSR**: Server Side Rendering
+* **SSR**: Server Side Rendering<br>
 ![img_14.png](img_14.png)
   * HTML 최종 결과를 서버에서 만들어서 웹 브라우저에 전달
   * 주로 정적인 화면에 사용
   * 관련 기술: JSP, Thymeleaf -> 백엔드 개발자
-* **CSR**: Client Side Rendering
+* **CSR**: Client Side Rendering<br>
 ![img_15.png](img_15.png)
   * HTML 결과를 자바스크립트를 사용해 웹 브라우저에서 동적으로 생성해서 적용
   * 주로 동적인 화면에 사용, 웹 환경을 마치 앱처럼 필요한 부분부분 변경할 수 있음
