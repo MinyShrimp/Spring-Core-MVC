@@ -693,10 +693,75 @@ public class ResponseHeaderServlet extends HttpServlet {
 ![img_13.png](img_13.png)
 
 ## HTTP 응답 데이터 - 단순 텍스트, HTML
+HTTP 응답 메시지는 주로 다음 내용을 담아서 전달한다.
+* 단순 텍스트 응답
+  * 앞에서 살펴본 `writer.println("ok");`
+* HTML 응답
+* HTML API - MessageBody JSON 응답
 
+### HttpServletResponse - HTML 응답
+```java
+@WebServlet(
+        name = "responseHtmlServlet",
+        urlPatterns = "/response-html"
+)
+public class ResponseHtmlServlet extends HttpServlet {
+  @Override
+  protected void service(
+          HttpServletRequest req,
+          HttpServletResponse resp
+  ) throws IOException {
+    // resp.setHeader("Content-Type", "text/html;charset=utf-8");
+    resp.setContentType("text/html");
+    resp.setCharacterEncoding("utf-8");
+
+    PrintWriter writer = resp.getWriter();
+    writer.println("<html> <body> <div> Hello HTML </div> </body> </html>");
+  }
+}
+```
+HTTP 응답으로 HTML을 반환할 때는 Content-Type을 `text/html`로 지정해야 한다.
+
+### 실행
+![img_14.png](img_14.png)
 
 ## HTTP 응답 데이터 - API JSON
+```java
+@WebServlet(
+        name = "responseJsonServlet",
+        urlPatterns = "/response-json"
+)
+public class ResponseJsonServlet extends HttpServlet {
+    private ObjectMapper objectMapper = new ObjectMapper();
 
+    @Override
+    protected void service(
+            HttpServletRequest req,
+            HttpServletResponse resp
+    ) throws IOException {
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("utf-8");
 
-## 정리
+        HelloData data = new HelloData();
+        data.setUsername("새우");
+        data.setAge(27);
 
+        // { "username": "새우", "age": 27 }
+        String result = objectMapper.writeValueAsString(data);
+        resp.getWriter().write(result);
+    }
+}
+```
+
+### 실행결과
+![img_15.png](img_15.png)
+HTTP 응답으로 JSON을 반환할 때는 Content-Type을 `application/json`으로 지정해야 한다.
+Jackson 라이브러리가 제공하는 `objectMapper.writeValueAsString()`을 사용하면 객체를 JSON 문자로 변경할 수 있다.
+
+> 참고<br>
+> `application/json`은 스펙상 utf-8 형식을 사용하도록 정의되어 있다.
+> 그래서 스펙에서 `charset=utf-8`과 같은 추가 파라미터를 지원하지 않는다.
+> 따라서 `application/json;charset=utf-8`이라고 전달하는 것은 의미 없는 파라미터를 추가한 것이 된다.
+> 
+> `resp.getWriter()`를 사용하면 추가 파라미터를 자동으로 추가해버린다.
+> 이때는 `resp.getOutputStream()`으로 출력하면 그런 문제가 없다.
