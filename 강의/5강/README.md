@@ -135,6 +135,76 @@ class DispatcherServlet {
 우리가 지금까지 함께 개발한 MVC 프레임워크와 유사한 구조여서 이해하기 어렵지 않았을 것이다.
 
 ## 핸들러 매핑과 핸들러 어댑터
+핸들러 매핑과 핸들러 어댑터가 어떤 것들이 어떻게 사용되는지 알아보자.
+지금은 전혀 사용하지 않지만, 과거에 주로 사용했던 스프링이 제공하는 간단한 컨트롤러로 핸들러 매핑과 어댑터를 이해해보자.
+
+### Controller Interface
+```java
+public interface Controller {
+    ModelAndView handleRequest(HttpServletRequest req, HttpServletResponse resp) throws Exception;
+}
+```
+스프링도 처음에는 이런 딱딱한 형식의 컨트롤러를 제공했다.
+
+> 참고<br>
+> `Controller` 인터페이스는 `@Controller` 애노테이션과 전혀 다르다.
+
+### OldController
+```java
+@Component("/springmvc/old-controller")
+public class OldController implements Controller {
+    @Override
+    public ModelAndView handleRequest(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws Exception {
+        System.out.println("OldController.handleRequest");
+        return null;
+    }
+}
+```
+* `@Component`: 이 컨트롤러는 `/springmvc/old-controller`라는 이름의 스프링 빈으로 등록되었다.
+* 빈의 이름으로 URL을 매핑할 것이다.
+
+### 이 컨트롤러는 어떻게 호출될 수 있었을까?
+이 컨트롤러가 호출되려면 다음 2가지가 필요하다.
+* HandlerMapping
+  * 핸들러 매핑에서 이 컨트롤러를 찾을 수 있어야 한다.
+  * 스프링 빈의 이름으로 핸들러를 찾을 수 있는 핸들러 매핑이 필요하다.
+* HandlerAdapter
+  * 핸들러 매핑을 통해서 찾은 핸들러를 실행할 수 있는 핸들러 어댑터가 필요하다.
+  * `Controller` 인터페이스를 실행할 수 있는 핸들러 어댑터를 찾고 실행해야 한다.
+
+### 스프링 부트가 자동 등록하는 핸들러 매핑과 핸들러 어댑터
+![img_2.png](img_2.png)
+핸들러 매핑도, 핸들러 어댑터도 모두 순서대로 찾고 만약 없으면 다음 순서로 넘어간다.
+
+### HttpRequestHandler
+핸들러 매핑과, 어댑터를 더 잘 이해하기 위해 Controller 인터페이스가 아닌 다른 핸들러를 알아보자.
+`HttpRequestHandler` 핸들러는 서블릿과 가장 유사한 형태의 핸들러이다.
+```java
+public interface HttpRequestHandler {
+	void handleRequest(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException;
+}
+```
+
+### MyHttpRequestHandler
+```java
+@Component("/springmvc/request-handler")
+public class MyHttpRequestHandler implements HttpRequestHandler {
+    @Override
+    public void handleRequest(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws ServletException, IOException {
+        System.out.println("MyHttpRequestHandler.handleRequest");
+    }
+}
+```
+
+### `@RequestMapping`
+가장 많이 사용하는 컨트롤러
 
 ## 뷰 리졸버
 
