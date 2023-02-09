@@ -1,4 +1,4 @@
-package hello.springcoremvc.basic;
+package hello.springcoremvc.basic.request;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
