@@ -597,7 +597,100 @@ public class RequestBodyJsonServlet extends HttpServlet {
 > 하지만 편리한 파라미터 조회 기능(`req.getParameter()`)을 이미 제공하기 때문에 파라미터 조회 기능을 사용하면 된다.
 
 ## HttpServletResponse - 기본 사용법
+### HttpServletResponse의 역할
+* HTTP 응답 메시지 생성
+* HTTP 응답 코드 지정
+* 헤더 생성
+* 바디 생성
+* 편의 기능 제공
+  * Content-Type, Cookie, Redirect
 
+### 기본 사용법
+```java
+@WebServlet(
+        name = "responseHeaderServlet",
+        urlPatterns = "/response-header"
+)
+public class ResponseHeaderServlet extends HttpServlet {
+  @Override
+  protected void service(
+          HttpServletRequest req,
+          HttpServletResponse resp
+  ) throws IOException {
+    // [ Status Line ]
+    resp.setStatus(HttpServletResponse.SC_OK); // 200
+
+    // [ Response Header ]
+    resp.setHeader("Content-Type", "text/plain;charset=utf-8");
+    // Cache 완전 무효화
+    resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    resp.setHeader("Pragma", "no-cache");
+    // Custom Header
+    resp.setHeader("My-Header", "hello");
+
+    // [ Header 편의 메소드 ]
+    content(resp);
+    cookie(resp);
+    redirect(resp);
+
+    // [ Message Body ]
+    PrintWriter writer = resp.getWriter();
+    writer.println("ok");
+  }
+}
+```
+![img_11.png](img_11.png)
+
+### Content 편의 메소드
+```java
+public class ResponseHeaderServlet extends HttpServlet {
+  /**
+   * Content 편의 메소드
+   * Content-Type: text/plain;utf-8
+   * Content-Length: 2
+   */
+  private void content(HttpServletResponse resp) {
+    // resp.setHeader("Content-Type", "text/plain;utf-8");
+    resp.setContentType("text/plain");
+    resp.setCharacterEncoding("utf-8");
+    resp.setContentLength(2); // 생략시 자동 생성
+  }
+}
+```
+
+### Cookie 편의 메소드
+```java
+public class ResponseHeaderServlet extends HttpServlet {
+  /**
+   * Cookie 편의 메서드
+   * Set-Cookie: myCookie=good; Max-Age=600;
+   */
+  private void cookie(HttpServletResponse resp) {
+    // resp.setHeader("Set-Cookie", "myCookie=good; Max-Age=600");
+    Cookie cookie = new Cookie("myCookie", "good");
+    cookie.setMaxAge(600);
+    resp.addCookie(cookie);
+  }
+}
+```
+![img_12.png](img_12.png)
+
+### Redirect 편의 메소드
+```java
+public class ResponseHeaderServlet extends HttpServlet {
+  /**
+   * Redirect 편의 메서드
+   * Status Code 302
+   * Location: /basic/hello-form.html
+   */
+  private void redirect(HttpServletResponse resp) throws IOException {
+    // resp.setStatus(HttpServletResponse.SC_FOUND); // 302
+    // resp.setHeader("Location", "/basic/hello-form.html");
+    resp.sendRedirect("/basic/hello-form.html");
+  }
+}
+```
+![img_13.png](img_13.png)
 
 ## HTTP 응답 데이터 - 단순 텍스트, HTML
 
