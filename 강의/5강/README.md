@@ -249,6 +249,73 @@ spring.mvc.view.suffix=.jsp
 > 최근에는 라이브러리만 추가하면 스프링 부트가 이런 작업도 모두 자동화해준다.
 
 ## 스프링 MVC - 시작하기
+스프링이 제공하는 컨트롤러는 애노테이션 기반으로 동작해서, 매우 유연하고 실용적이다.
+과거에는 자바 언어에 애노테이션이 없기도 했고, 스프링도 처음부터 이런 유연한 컨트롤러를 제공한 것은 아니다.
+
+### `@RequestMapping`
+* 스프링은 애노테이션을 활용한 매우 유연하고, 실용적인 컨트롤러를 만들었는데 이것이 바로 `@RequestMapping` 애노테이션을 사용하는 컨트롤러이다.
+* 핸들러 매핑과 핸들러 어댑터의 가장 높은 우선순위가 `@RequestMapping`이다.
+
+### SpringMemberFormController V1
+```java
+@Controller
+public class SpringMemberFormControllerV1 {
+    @RequestMapping("/springmvc/v1/members/new-form")
+    public ModelAndView process() {
+        return new ModelAndView("new-form");
+    }
+}
+```
+* `@Controller`
+  * 스프링이 자동으로 스프링 빈으로 등록된다.
+  * 스프링 MVC에서 애노테이션 기반 컨트롤러로 인식한다.
+* `@RequestMapping`
+  * 요청 정보를 매핑한다.
+  * 해당 URL이 호출되면 이 메서드가 호출된다.
+  * 애노테이션 기반으로 동작하기 때문에, 메서드의 이름은 임의로 지으면 된다.
+* `ModelAndView`
+  * 모델과 뷰 정보를 담아서 반환하면 된다.
+
+### SpringMemberSaveController V1
+```java
+@Controller
+public class SpringMemberSaveControllerV1 {
+    private MemberRepository memberRepository = MemberRepository.getInstance();
+
+    @RequestMapping("/springmvc/v1/members/save")
+    public ModelAndView process(
+            HttpServletRequest req,
+            HttpServletResponse resp
+    ) {
+        String username = req.getParameter("username");
+        int age = Integer.parseInt(req.getParameter("age"));
+
+        Member member = new Member(username, age);
+        memberRepository.save(member);
+
+        ModelAndView mv = new ModelAndView("save-result");
+        mv.addObject("member", member);
+        return mv;
+    }
+}
+```
+
+### SpringMemberListController V1
+```java
+@Controller
+public class SpringMemberListControllerV1 {
+    private MemberRepository memberRepository = MemberRepository.getInstance();
+
+    @RequestMapping("/springmvc/v1/members")
+    public ModelAndView process() {
+        List<Member> members = memberRepository.findAll();
+
+        ModelAndView mv = new ModelAndView("members");
+        mv.addObject("members", members);
+        return mv;
+    }
+}
+```
 
 ## 스프링 MVC - 컨트롤러 통합
 
