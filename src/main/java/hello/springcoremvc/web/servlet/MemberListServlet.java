@@ -1,4 +1,4 @@
-package hello.springcoremvc.web;
+package hello.springcoremvc.web.servlet;
 
 import hello.springcoremvc.model.Member;
 import hello.springcoremvc.model.MemberRepository;
