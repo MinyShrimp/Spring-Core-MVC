@@ -358,3 +358,43 @@ public class SpringMemberControllerV2 {
 ```
 
 ## 스프링 MVC - 실용적인 방식
+### SpringMemberController V3
+```java
+/**
+ * V3
+ *  - Model 도입
+ *  - ViewName 직접 반환
+ *  - @RequestParam 사용
+ *  - @RequestMapping -> @GetMapping, @PostMapping
+ */
+@Controller
+@RequestMapping("/springmvc/v3/members")
+public class SpringMemberControllerV3 {
+    private MemberRepository memberRepository = MemberRepository.getInstance();
+
+    @GetMapping("/new-form")
+    public String newForm() {
+        return "new-form";
+    }
+
+    @PostMapping("/save")
+    public String save(
+            @RequestParam("username") String username,
+            @RequestParam("age") int age,
+            Model model
+    ) {
+        Member member = new Member(username, age);
+        memberRepository.save(member);
+
+        model.addAttribute("member", member);
+        return "save-result";
+    }
+
+    @GetMapping
+    public String members(Model model) {
+        List<Member> members = memberRepository.findAll();
+        model.addAttribute("members", members);
+        return "members";
+    }
+}
+```
