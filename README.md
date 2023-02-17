@@ -1,9 +1,9 @@
 # 스프링 MVC 1편 - 백엔드 웹 개발 핵심 기술
 * [인프런: 스프링 MVC 1편 - 백엔드 웹 개발 핵심 기술](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-mvc-1/)
 * 깃헙
-    * https://github.com/MinyShrimp/Spring-Core-MVC
-    * https://github.com/MinyShrimp/Spring-Core-MVC-Six
-    * https://github.com/MinyShrimp/Spring-Core-MVC-Seven
+    * https://github.com/MinyShrimp/Spring-Core-MVC-1
+    * https://github.com/MinyShrimp/Spring-Core-MVC-6
+    * https://github.com/MinyShrimp/Spring-Core-MVC-7
 
 ## [소개](./강의/0강)
 
